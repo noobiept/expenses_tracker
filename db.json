@@ -1,6 +1,6 @@
 {
     "expenses": [
-        { "id": 1, "description": "Restaurant" },
-        { "id": 2, "description": "Taxi" }
+        { "id": "1", "description": "Restaurant" },
+        { "id": "2", "description": "Taxi" }
     ]
 }
