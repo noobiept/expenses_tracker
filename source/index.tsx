@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import ExpensesList from "./expenses_list";
+import Router from "./router";
 
-ReactDOM.render(<ExpensesList />, document.getElementById("Container"));
+ReactDOM.render(<Router />, document.getElementById("Container"));
