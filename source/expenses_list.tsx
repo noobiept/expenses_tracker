@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ParseLinkHeader from "parse-link-header";
+import { Link } from "react-router-dom";
 
 import { Expense, LinkHeaderInfo } from "./types";
 import Select from "./elements/select";
@@ -90,7 +91,11 @@ export default function ExpensesList() {
             {expenses && (
                 <ul>
                     {expenses.map((expense) => (
-                        <li key={expense.id}>{expense.transactionDate}</li>
+                        <li key={expense.id}>
+                            <Link to={`/expense/${expense.id}`}>
+                                {expense.transactionDate}
+                            </Link>
+                        </li>
                     ))}
                 </ul>
             )}
