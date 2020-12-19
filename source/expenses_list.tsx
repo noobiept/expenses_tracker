@@ -10,7 +10,6 @@ export default function ExpensesList() {
             const result = (await response.json()) as Expense[];
             setExpenses(result);
             setLoading(false);
-            console.log("loaded", result);
         }
 
         fetchExpenses();
@@ -25,7 +24,9 @@ export default function ExpensesList() {
                     {expenses && (
                         <ul>
                             {expenses.map((expense) => (
-                                <li key={expense.id}>{expense.description}</li>
+                                <li key={expense.id}>
+                                    {expense.transactionDate}
+                                </li>
                             ))}
                         </ul>
                     )}
