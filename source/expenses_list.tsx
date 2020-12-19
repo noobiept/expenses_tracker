@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ParseLinkHeader from "parse-link-header";
 
 import { Expense, LinkHeaderInfo } from "./types";
+import Select from "./elements/select";
 
 export default function ExpensesList() {
     const [loading, setLoading] = useState(true);
@@ -35,7 +36,7 @@ export default function ExpensesList() {
         }
 
         fetchExpenses();
-    }, [page]);
+    }, [page, limit]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -65,6 +66,10 @@ export default function ExpensesList() {
             }
         }
     };
+    const changeLimit = (val: number) => {
+        setPage(1);
+        setLimit(val);
+    };
 
     return (
         <div>
@@ -81,6 +86,7 @@ export default function ExpensesList() {
             <button onClick={goToLastPage} disabled={!pagesInfo?.last}>
                 Go to Last Page
             </button>
+            <Select values={[50, 100, 200]} onChange={changeLimit} />
             {expenses && (
                 <ul>
                     {expenses.map((expense) => (
