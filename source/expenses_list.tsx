@@ -69,10 +69,18 @@ export default function ExpensesList() {
     return (
         <div>
             <div>Page: {page}</div>
-            <button onClick={goToFirstPage}>Go to First Page</button>
-            <button onClick={goPreviousPage}>Previous</button>
-            <button onClick={goNextPage}>Next</button>
-            <button onClick={goToLastPage}>Go to Last Page</button>
+            <button onClick={goToFirstPage} disabled={!pagesInfo?.first}>
+                Go to First Page
+            </button>
+            <button onClick={goPreviousPage} disabled={!pagesInfo?.prev}>
+                Previous
+            </button>
+            <button onClick={goNextPage} disabled={!pagesInfo?.next}>
+                Next
+            </button>
+            <button onClick={goToLastPage} disabled={!pagesInfo?.last}>
+                Go to Last Page
+            </button>
             {expenses && (
                 <ul>
                     {expenses.map((expense) => (
