@@ -1,36 +1,84 @@
 import React, { useEffect, useState } from "react";
-import { Expense } from "./types";
+import ParseLinkHeader from "parse-link-header";
+
+import { Expense, LinkHeaderInfo } from "./types";
 
 export default function ExpensesList() {
     const [loading, setLoading] = useState(true);
     const [expenses, setExpenses] = useState<Expense[] | undefined>();
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(50);
+    const [pagesInfo, setPagesInfo] = useState<LinkHeaderInfo>();
+
     useEffect(() => {
         async function fetchExpenses() {
-            const response = await fetch("http://localhost:3000/expenses");
+            const response = await fetch(
+                `http://localhost:3000/expenses?_page=${page}&_limit=${limit}`
+            );
+            const linkHeader = response.headers.get("link");
+
+            if (!linkHeader) {
+                console.error("Missing 'link' header.");
+                return;
+            }
+
+            const parsedPagesInfo = ParseLinkHeader(linkHeader);
+            if (!parsedPagesInfo) {
+                console.error("Failed to parse the 'link' info.");
+                return;
+            }
+
             const result = (await response.json()) as Expense[];
             setExpenses(result);
             setLoading(false);
+            setPagesInfo((parsedPagesInfo as unknown) as LinkHeaderInfo);
         }
 
         fetchExpenses();
-    }, []);
+    }, [page]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    const goPreviousPage = () => {
+        if (pagesInfo?.prev) {
+            setPage(page - 1);
+        }
+    };
+    const goNextPage = () => {
+        if (pagesInfo?.next) {
+            setPage(page + 1);
+        }
+    };
+    const goToFirstPage = () => {
+        if (pagesInfo?.first) {
+            setPage(1);
+        }
+    };
+    const goToLastPage = () => {
+        if (pagesInfo?.last) {
+            const url = new URL(pagesInfo.last.url);
+            const page = url.searchParams.get("_page");
+            if (page) {
+                setPage(parseInt(page));
+            }
+        }
+    };
 
     return (
         <div>
-            {loading ? (
-                <div>Loading...</div>
-            ) : (
-                <>
-                    {expenses && (
-                        <ul>
-                            {expenses.map((expense) => (
-                                <li key={expense.id}>
-                                    {expense.transactionDate}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </>
+            <div>Page: {page}</div>
+            <button onClick={goToFirstPage}>Go to First Page</button>
+            <button onClick={goPreviousPage}>Previous</button>
+            <button onClick={goNextPage}>Next</button>
+            <button onClick={goToLastPage}>Go to Last Page</button>
+            {expenses && (
+                <ul>
+                    {expenses.map((expense) => (
+                        <li key={expense.id}>{expense.transactionDate}</li>
+                    ))}
+                </ul>
             )}
         </div>
     );
