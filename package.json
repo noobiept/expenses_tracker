@@ -4,6 +4,7 @@
     "devDependencies": {
         "@types/react": "^17.0.0",
         "@types/react-dom": "^17.0.0",
+        "prettier": "^2.2.1",
         "ts-loader": "^8.0.12",
         "typescript": "^4.1.3",
         "webpack": "^5.11.0",
@@ -15,8 +16,22 @@
         "react": "^17.0.1",
         "react-dom": "^17.0.1"
     },
+    "prettier": {
+        "printWidth": 80,
+        "tabWidth": 4,
+        "useTabs": false,
+        "semi": true,
+        "singleQuote": false,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "arrowParens": "always",
+        "htmlWhitespaceSensitivity": "strict",
+        "endOfLine": "lf"
+    },
     "scripts": {
         "fe": "webpack serve",
-        "server": "json-server --watch db.json"
+        "server": "json-server --watch db.json",
+        "format": "prettier --write \"**/*.{html,css,json,js,ts,tsx,md}\"",
+        "test:format": "prettier --check \"**/*.{html,css,json,js,ts,tsx,md}\""
     }
 }
