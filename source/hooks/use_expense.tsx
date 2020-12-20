@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Expense } from "../types";
+import config from "../config.json";
 
 export default function useExpense(id?: string) {
     const [loading, setLoading] = useState(false);
@@ -9,9 +10,8 @@ export default function useExpense(id?: string) {
         async function fetchExpense() {
             setLoading(true);
 
-            const response = await fetch(
-                `http://localhost:3000/expenses?id=${id}`
-            );
+            const url = new URL(`expenses?id=${id}`, config.serverURL);
+            const response = await fetch(url.href);
             const result = (await response.json()) as Expense[];
 
             setExpense(result[0]);
