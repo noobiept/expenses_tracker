@@ -23,6 +23,10 @@ export default function Expense() {
         <>
             <div>ID: {expense.id}</div>
             <div>Date: {expense.transactionDate}</div>
+            <div>Type: {expense.type}</div>
+            <div>Amount: {expense.amount}</div>
+            <div>Currency: {expense.currency}</div>
+            <div>Recipient: {expense.recipient}</div>
         </>
     );
 }

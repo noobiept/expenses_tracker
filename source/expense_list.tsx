@@ -63,7 +63,7 @@ export default function ExpenseList() {
                     {expenses.map((expense) => (
                         <li key={expense.id}>
                             <Link to={`/expense/${expense.id}`}>
-                                {expense.transactionDate}
+                                {expense.transactionDate} {expense.type}
                             </Link>
                         </li>
                     ))}

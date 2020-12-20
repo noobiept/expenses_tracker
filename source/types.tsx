@@ -1,6 +1,10 @@
 export interface Expense {
     id: string;
     transactionDate: string;
+    amount: number;
+    recipient: string;
+    currency: string;
+    type: string;
 }
 
 export interface PageInfo {

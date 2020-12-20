@@ -10,6 +10,10 @@ function generate(length) {
         expenses.push({
             id: uuidv4(),
             transactionDate: faker.date.past(),
+            amount: faker.finance.amount(),
+            recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
+            currency: faker.finance.currencyCode(),
+            type: faker.commerce.product(),
         });
     }
 
