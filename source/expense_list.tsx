@@ -9,10 +9,6 @@ export default function ExpenseList() {
     const [limit, setLimit] = useState(50);
     const { loading, expenses, pagesInfo } = useExpenseList(page, limit);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     const goPreviousPage = () => {
         if (pagesInfo?.prev) {
             setPage(page - 1);
@@ -44,7 +40,9 @@ export default function ExpenseList() {
 
     return (
         <div>
-            <div>Page: {page}</div>
+            <div>
+                Page: {page} {loading && <span>Loading...</span>}
+            </div>
             <button onClick={goToFirstPage} disabled={!pagesInfo?.first}>
                 Go to First Page
             </button>
