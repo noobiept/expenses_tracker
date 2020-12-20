@@ -57,7 +57,11 @@ export default function ExpenseList() {
             <button onClick={goToLastPage} disabled={!pagesInfo?.last}>
                 Go to Last Page
             </button>
-            <Select values={[50, 100, 200]} onChange={changeLimit} />
+            <Select
+                selected={limit}
+                values={[50, 100, 200]}
+                onChange={changeLimit}
+            />
             {expenses && (
                 <ul>
                     {expenses.map((expense) => (
