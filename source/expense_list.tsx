@@ -1,43 +1,13 @@
-import React, { useEffect, useState } from "react";
-import ParseLinkHeader from "parse-link-header";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Expense, LinkHeaderInfo } from "./types";
 import Select from "./elements/select";
+import useExpenseList from "./hooks/use_expense_list";
 
-export default function ExpensesList() {
-    const [loading, setLoading] = useState(true);
-    const [expenses, setExpenses] = useState<Expense[] | undefined>();
+export default function ExpenseList() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(50);
-    const [pagesInfo, setPagesInfo] = useState<LinkHeaderInfo>();
-
-    useEffect(() => {
-        async function fetchExpenses() {
-            const response = await fetch(
-                `http://localhost:3000/expenses?_page=${page}&_limit=${limit}`
-            );
-            const linkHeader = response.headers.get("link");
-
-            if (!linkHeader) {
-                console.error("Missing 'link' header.");
-                return;
-            }
-
-            const parsedPagesInfo = ParseLinkHeader(linkHeader);
-            if (!parsedPagesInfo) {
-                console.error("Failed to parse the 'link' info.");
-                return;
-            }
-
-            const result = (await response.json()) as Expense[];
-            setExpenses(result);
-            setLoading(false);
-            setPagesInfo((parsedPagesInfo as unknown) as LinkHeaderInfo);
-        }
-
-        fetchExpenses();
-    }, [page, limit]);
+    const { loading, expenses, pagesInfo } = useExpenseList(page, limit);
 
     if (loading) {
         return <div>Loading...</div>;

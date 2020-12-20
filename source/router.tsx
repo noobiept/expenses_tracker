@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import Expense from "./expense";
-import ExpensesList from "./expenses_list";
+import ExpenseList from "./expense_list";
 
 export default function Router() {
     return (
@@ -14,7 +14,7 @@ export default function Router() {
                 </ul>
             </nav>
             <Switch>
-                <Route path="/" exact component={ExpensesList} />
+                <Route path="/" exact component={ExpenseList} />
                 <Route path="/expense/:id" component={Expense} />
             </Switch>
         </BrowserRouter>
