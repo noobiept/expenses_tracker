@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import Select from "./elements/select";
 import useExpenseList from "./hooks/use_expense_list";
+import { formatDate } from "./utilities";
 
 export default function ExpenseList() {
     const [page, setPage] = useState(1);
@@ -65,7 +66,8 @@ export default function ExpenseList() {
                     {expenses.map((expense) => (
                         <li key={expense.id}>
                             <Link to={`/expense/${expense.id}`}>
-                                {expense.transactionDate} {expense.type}
+                                {formatDate(expense.transactionDate)}{" "}
+                                {expense.type}
                             </Link>
                         </li>
                     ))}

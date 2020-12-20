@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import useExpense from "./hooks/use_expense";
 import { Expense } from "./types";
+import { formatDateLong } from "./utilities";
 
 interface ExpenseParams {
     id?: string;
@@ -22,7 +23,7 @@ export default function Expense() {
     return (
         <>
             <div>ID: {expense.id}</div>
-            <div>Date: {expense.transactionDate}</div>
+            <div>Date: {formatDateLong(expense.transactionDate)}</div>
             <div>Type: {expense.type}</div>
             <div>Amount: {expense.amount}</div>
             <div>Currency: {expense.currency}</div>
