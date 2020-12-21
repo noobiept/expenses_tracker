@@ -1,24 +1,30 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useExpense from "./hooks/use_expense";
-import { Expense } from "./types";
-import { formatDateLong } from "./utilities";
+import { deleteExpense } from "./requests";
+import { formatDateLong, isEmpty } from "./utilities";
 
-interface ExpenseParams {
+interface IndividualExpenseParams {
     id?: string;
 }
 
-export default function Expense() {
-    const { id } = useParams<ExpenseParams>();
+export default function IndividualExpense() {
+    const { id } = useParams<IndividualExpenseParams>();
     const { loading, expense } = useExpense(id);
+    const history = useHistory();
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (!expense) {
+    if (!expense || isEmpty(expense)) {
         return <div>Not found.</div>;
     }
+
+    const deleteItem = () => {
+        deleteExpense(expense.id);
+        history.push("/");
+    };
 
     return (
         <>
@@ -28,6 +34,9 @@ export default function Expense() {
             <div>Amount: {expense.amount}</div>
             <div>Currency: {expense.currency}</div>
             <div>Recipient: {expense.recipient}</div>
+            <div>
+                <button onClick={deleteItem}>Delete</button>
+            </div>
         </>
     );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
-import Expense from "./expense";
+import IndividualExpense from "./individual_expense";
 import ExpenseList from "./expense_list";
 
 export default function Router() {
@@ -15,7 +15,7 @@ export default function Router() {
             </nav>
             <Switch>
                 <Route path="/" exact component={ExpenseList} />
-                <Route path="/expense/:id" component={Expense} />
+                <Route path="/expense/:id" component={IndividualExpense} />
             </Switch>
         </BrowserRouter>
     );

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 import Select from "./elements/select";
+import ExpenseRow from "./expense_row";
 import useExpenseList from "./hooks/use_expense_list";
-import { formatDate } from "./utilities";
 
 export default function ExpenseList() {
     const [page, setPage] = useState(1);
@@ -65,10 +64,7 @@ export default function ExpenseList() {
                 <ul>
                     {expenses.map((expense) => (
                         <li key={expense.id}>
-                            <Link to={`/expense/${expense.id}`}>
-                                {formatDate(expense.transactionDate)}{" "}
-                                {expense.type}
-                            </Link>
+                            <ExpenseRow expense={expense} />
                         </li>
                     ))}
                 </ul>

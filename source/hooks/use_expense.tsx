@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Expense } from "../types";
-import config from "../config.json";
+import { getExpense } from "../requests";
 
 export default function useExpense(id?: string) {
     const [loading, setLoading] = useState(false);
@@ -9,12 +9,7 @@ export default function useExpense(id?: string) {
     useEffect(() => {
         async function fetchExpense() {
             setLoading(true);
-
-            const url = new URL(`expenses?id=${id}`, config.serverURL);
-            const response = await fetch(url.href);
-            const result = (await response.json()) as Expense[];
-
-            setExpense(result[0]);
+            setExpense(await getExpense(id));
             setLoading(false);
         }
 
