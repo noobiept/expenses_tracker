@@ -24,3 +24,15 @@ export async function deleteExpense(id?: string) {
     });
     return response.ok;
 }
+
+export async function updateExpense(expense: Expense) {
+    const url = new URL(`expenses/${expense.id}`, config.serverURL);
+    const response = await fetch(url.href, {
+        method: "PUT",
+        headers: new Headers({
+            "Content-Type": "application/json",
+        }),
+        body: JSON.stringify(expense),
+    });
+    return response.ok;
+}
