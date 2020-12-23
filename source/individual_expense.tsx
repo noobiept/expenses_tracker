@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ExpenseForm from "./forms/expense_form";
 import useExpense from "./hooks/use_expense";
 import { isEmpty } from "./utilities";
@@ -11,6 +11,7 @@ interface IndividualExpenseParams {
 export default function IndividualExpense() {
     const { id } = useParams<IndividualExpenseParams>();
     const { loading, expense } = useExpense(id);
+    const history = useHistory();
 
     if (loading) {
         return <div>Loading...</div>;
@@ -24,6 +25,7 @@ export default function IndividualExpense() {
         <>
             <h1>Expense</h1>
             <ExpenseForm expense={expense} />
+            <button onClick={history.goBack}>Back</button>
         </>
     );
 }
