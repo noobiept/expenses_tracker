@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { deleteExpense, updateExpense } from "../requests";
 import { Expense } from "../types";
@@ -17,6 +17,16 @@ export default function ExpenseForm({ expense }: ExpenseFormArgs) {
     const [amount, setAmount] = useState<number>(expense.amount);
     const [currency, setCurrency] = useState<string>(expense.currency);
     const [recipient, setRecipient] = useState<string>(expense.recipient);
+    const [updated, setUpdated] = useState<number | undefined>();
+
+    useEffect(() => {
+        if (updated != undefined) {
+            const id = setTimeout(() => {
+                setUpdated(undefined);
+            }, 2000);
+            return () => clearTimeout(id);
+        }
+    }, [updated]);
 
     const deleteItem = () => {
         deleteExpense(expense.id);
@@ -31,7 +41,7 @@ export default function ExpenseForm({ expense }: ExpenseFormArgs) {
             currency,
             recipient,
         });
-        history.push("/");
+        setUpdated(updated ? updated + 1 : 1);
     };
 
     return (
@@ -81,6 +91,7 @@ export default function ExpenseForm({ expense }: ExpenseFormArgs) {
             <div>
                 <button onClick={deleteItem}>Delete</button>
                 <button onClick={updateItem}>Update</button>
+                {updated && <div>Updated</div>}
             </div>
         </>
     );
