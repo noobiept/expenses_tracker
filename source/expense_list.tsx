@@ -7,7 +7,7 @@ import useExpenseList from "./hooks/use_expense_list";
 export default function ExpenseList() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(50);
-    const { loading, expenses, pagesInfo } = useExpenseList(page, limit);
+    const { loading, error, expenses, pagesInfo } = useExpenseList(page, limit);
 
     const goPreviousPage = () => {
         if (pagesInfo?.prev) {
@@ -42,6 +42,7 @@ export default function ExpenseList() {
         <div>
             <div>
                 Page: {page} {loading && <span>Loading...</span>}
+                {error && <span>Failed to retrieve the expenses list.</span>}
             </div>
             <button onClick={goToFirstPage} disabled={!pagesInfo?.first}>
                 Go to First Page

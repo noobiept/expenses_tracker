@@ -10,11 +10,15 @@ interface IndividualExpenseParams {
 
 export default function IndividualExpense() {
     const { id } = useParams<IndividualExpenseParams>();
-    const { loading, expense } = useExpense(id);
+    const { loading, error, expense } = useExpense(id);
     const history = useHistory();
 
     if (loading) {
         return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Failed to retrieve the expense information.</div>;
     }
 
     if (!expense || isEmpty(expense)) {
