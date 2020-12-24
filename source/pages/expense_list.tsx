@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import Select from "./elements/select";
-import ExpenseRow from "./expense_row";
-import useExpenseList from "./hooks/use_expense_list";
+import Select from "../elements/select";
+import ExpenseRow from "../expense_row";
+import useExpenseList from "../hooks/use_expense_list";
 
 export default function ExpenseList() {
     const [page, setPage] = useState(1);

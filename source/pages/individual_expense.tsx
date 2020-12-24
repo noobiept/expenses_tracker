@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import ExpenseForm from "./forms/expense_form";
-import useExpense from "./hooks/use_expense";
-import { isEmpty } from "./utilities";
+import ExpenseForm from "../forms/expense_form";
+import useExpense from "../hooks/use_expense";
+import { isEmpty } from "../utilities";
 
 interface IndividualExpenseParams {
     id?: string;

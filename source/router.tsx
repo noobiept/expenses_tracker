@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
-import IndividualExpense from "./individual_expense";
-import ExpenseList from "./expense_list";
+import IndividualExpense from "./pages/individual_expense";
+import ExpenseList from "./pages/expense_list";
 
 export default function Router() {
     return (
