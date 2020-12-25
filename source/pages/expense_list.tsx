@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 import Select from "../elements/select";
-import ExpenseRow from "../expense_row";
+import ExpenseRow from "./expense_row";
 import useExpenseList from "../hooks/use_expense_list";
+import { Controls, Table, TableHeader, TableRow } from "./expense_list.styles";
 
 export default function ExpenseList() {
     const [page, setPage] = useState(1);
@@ -44,31 +45,42 @@ export default function ExpenseList() {
                 Page: {page} {loading && <span>Loading...</span>}
                 {error && <span>Failed to retrieve the expenses list.</span>}
             </div>
-            <button onClick={goToFirstPage} disabled={!pagesInfo?.first}>
-                Go to First Page
-            </button>
-            <button onClick={goPreviousPage} disabled={!pagesInfo?.prev}>
-                Previous
-            </button>
-            <button onClick={goNextPage} disabled={!pagesInfo?.next}>
-                Next
-            </button>
-            <button onClick={goToLastPage} disabled={!pagesInfo?.last}>
-                Go to Last Page
-            </button>
-            <Select
-                selected={limit}
-                values={[50, 100, 200]}
-                onChange={changeLimit}
-            />
+            <Controls>
+                <button onClick={goToFirstPage} disabled={!pagesInfo?.first}>
+                    Go to First Page
+                </button>
+                <button onClick={goPreviousPage} disabled={!pagesInfo?.prev}>
+                    Previous
+                </button>
+                <button onClick={goNextPage} disabled={!pagesInfo?.next}>
+                    Next
+                </button>
+                <button onClick={goToLastPage} disabled={!pagesInfo?.last}>
+                    Go to Last Page
+                </button>
+                <Select
+                    selected={limit}
+                    values={[50, 100, 200]}
+                    onChange={changeLimit}
+                />
+            </Controls>
             {expenses && (
-                <ul>
-                    {expenses.map((expense) => (
-                        <li key={expense.id}>
-                            <ExpenseRow expense={expense} />
-                        </li>
-                    ))}
-                </ul>
+                <Table>
+                    <thead>
+                        <TableRow>
+                            <TableHeader>Type</TableHeader>
+                            <TableHeader>Amount</TableHeader>
+                            <TableHeader>Currency</TableHeader>
+                            <TableHeader>Recipient</TableHeader>
+                            <TableHeader>Date</TableHeader>
+                        </TableRow>
+                    </thead>
+                    <tbody>
+                        {expenses.map((expense) => (
+                            <ExpenseRow key={expense.id} expense={expense} />
+                        ))}
+                    </tbody>
+                </Table>
             )}
         </div>
     );
