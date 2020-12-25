@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import ExpenseForm from "../forms/expense_form";
 import useExpense from "../hooks/use_expense";
+import { ErrorMessage } from "../styles";
 import { isEmpty } from "../utilities";
 
 interface IndividualExpenseParams {
@@ -18,7 +19,11 @@ export default function IndividualExpense() {
     }
 
     if (error) {
-        return <div>Failed to retrieve the expense information.</div>;
+        return (
+            <ErrorMessage>
+                -- Failed to retrieve the expense information --
+            </ErrorMessage>
+        );
     }
 
     if (!expense || isEmpty(expense)) {

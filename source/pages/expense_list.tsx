@@ -4,6 +4,7 @@ import Select from "../elements/select";
 import ExpenseRow from "./expense_row";
 import useExpenseList from "../hooks/use_expense_list";
 import { Controls, Table, TableHeader, TableRow } from "./expense_list.styles";
+import { ErrorMessage } from "../styles";
 
 export default function ExpenseList() {
     const [page, setPage] = useState(1);
@@ -43,8 +44,12 @@ export default function ExpenseList() {
         <div>
             <div>
                 Page: {page} {loading && <span>Loading...</span>}
-                {error && <span>Failed to retrieve the expenses list.</span>}
             </div>
+            {error && (
+                <ErrorMessage>
+                    -- Failed to retrieve the expenses list --
+                </ErrorMessage>
+            )}
             <Controls>
                 <button onClick={goToFirstPage} disabled={!pagesInfo?.first}>
                     Go to First Page
