@@ -3,7 +3,14 @@ import React, { useState } from "react";
 import Select from "../elements/select";
 import ExpenseRow from "./expense_row";
 import useExpenseList from "../hooks/use_expense_list";
-import { Controls, Table, TableHeader, TableRow } from "./expense_list.styles";
+import {
+    Controls,
+    Table,
+    TableHeader,
+    TableRow,
+    TBody,
+    THead,
+} from "./expense_list.styles";
 import { ErrorMessage } from "../styles";
 
 export default function ExpenseList() {
@@ -71,7 +78,7 @@ export default function ExpenseList() {
             </Controls>
             {expenses && (
                 <Table>
-                    <thead>
+                    <THead>
                         <TableRow>
                             <TableHeader>Type</TableHeader>
                             <TableHeader>Amount</TableHeader>
@@ -79,12 +86,12 @@ export default function ExpenseList() {
                             <TableHeader>Recipient</TableHeader>
                             <TableHeader>Date</TableHeader>
                         </TableRow>
-                    </thead>
-                    <tbody>
+                    </THead>
+                    <TBody>
                         {expenses.map((expense) => (
                             <ExpenseRow key={expense.id} expense={expense} />
                         ))}
-                    </tbody>
+                    </TBody>
                 </Table>
             )}
         </div>
