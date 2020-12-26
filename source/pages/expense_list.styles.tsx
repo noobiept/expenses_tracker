@@ -1,9 +1,23 @@
 import styled from "styled-components";
+import { Device } from "../styles";
 
-export const Table = styled.table``;
+export const Table = styled.table`
+    @media ${Device.mobile} {
+        width: 100%;
+    }
+`;
 
 export const THead = styled.thead`
-    background-color: rgba(0, 0, 255, 0.3);
+    background-color: rgb(156, 172, 233);
+
+    @media ${Device.mobile} {
+        position: sticky;
+        top: 0;
+
+        th {
+            display: block;
+        }
+    }
 `;
 
 export const TBody = styled.tbody`
