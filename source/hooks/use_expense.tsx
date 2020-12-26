@@ -3,7 +3,7 @@ import { Expense } from "../types";
 import { getExpense } from "../requests";
 
 export default function useExpense(id?: string) {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [expense, setExpense] = useState<Expense>();
 

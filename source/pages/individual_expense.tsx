@@ -4,6 +4,7 @@ import ExpenseForm from "../forms/expense_form";
 import useExpense from "../hooks/use_expense";
 import { ErrorMessage } from "../styles";
 import { isEmpty } from "../utilities";
+import { Buttons } from "./individual_expense.styles";
 
 interface IndividualExpenseParams {
     id?: string;
@@ -14,27 +15,28 @@ export default function IndividualExpense() {
     const { loading, error, expense } = useExpense(id);
     const history = useHistory();
 
+    let content;
     if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return (
+        content = <div>Loading...</div>;
+    } else if (error) {
+        content = (
             <ErrorMessage>
                 -- Failed to retrieve the expense information --
             </ErrorMessage>
         );
-    }
-
-    if (!expense || isEmpty(expense)) {
-        return <div>Not found.</div>;
+    } else if (!expense || isEmpty(expense)) {
+        content = <div>Not found.</div>;
+    } else {
+        content = <ExpenseForm expense={expense} />;
     }
 
     return (
         <>
             <h1>Expense</h1>
-            <ExpenseForm expense={expense} />
-            <button onClick={history.goBack}>Back</button>
+            {content}
+            <Buttons>
+                <button onClick={history.goBack}>Back</button>
+            </Buttons>
         </>
     );
 }
