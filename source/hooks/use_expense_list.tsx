@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ParseLinkHeader from "parse-link-header";
 import { Expense, LinkHeaderInfo } from "../types";
 import config from "../config.json";
+import { logError } from "../log";
 
 export default function useExpenseList(page: number, limit: number) {
     const [loading, setLoading] = useState(false);
@@ -21,29 +22,27 @@ export default function useExpenseList(page: number, limit: number) {
                 );
                 const response = await fetch(url.href);
                 if (!response.ok) {
-                    setError(true);
-                    return;
+                    throw new Error(
+                        `Unsuccessful response: ${response.status}`
+                    );
                 }
 
                 const linkHeader = response.headers.get("link");
                 if (!linkHeader) {
-                    setError(true);
-                    console.error("Missing 'link' header.");
-                    return;
+                    throw new Error("Missing 'link' header.");
                 }
 
                 const parsedPagesInfo = ParseLinkHeader(linkHeader);
                 if (!parsedPagesInfo) {
-                    setError(true);
-                    console.error("Failed to parse the 'link' info.");
-                    return;
+                    throw new Error("Failed to parse the 'link' info.");
                 }
 
                 const result = (await response.json()) as Expense[];
                 setExpenses(result);
                 setPagesInfo((parsedPagesInfo as unknown) as LinkHeaderInfo);
-            } catch {
+            } catch (err) {
                 setError(true);
+                logError(err.message);
             } finally {
                 setLoading(false);
             }

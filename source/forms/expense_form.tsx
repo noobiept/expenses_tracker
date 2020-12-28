@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { logError } from "../log";
 import { deleteExpense, updateExpense } from "../requests";
+import { ErrorMessage } from "../styles";
 import { Expense } from "../types";
 import { formatDate } from "../utilities";
 import { Buttons, Container } from "./expense_form.styles";
@@ -19,6 +21,7 @@ export default function ExpenseForm({ expense }: ExpenseFormArgs) {
     const [currency, setCurrency] = useState<string>(expense.currency);
     const [recipient, setRecipient] = useState<string>(expense.recipient);
     const [updated, setUpdated] = useState<number | undefined>();
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         if (updated != undefined) {
@@ -29,20 +32,34 @@ export default function ExpenseForm({ expense }: ExpenseFormArgs) {
         }
     }, [updated]);
 
-    const deleteItem = () => {
-        deleteExpense(expense.id);
-        history.push("/");
+    const deleteItem = async () => {
+        setError(false);
+
+        try {
+            await deleteExpense(expense.id);
+            history.push("/");
+        } catch (err) {
+            setError(true);
+            logError(err.message);
+        }
     };
-    const updateItem = () => {
-        updateExpense({
-            ...expense,
-            transactionDate,
-            type,
-            amount,
-            currency,
-            recipient,
-        });
-        setUpdated(updated ? updated + 1 : 1);
+    const updateItem = async () => {
+        setError(false);
+
+        try {
+            await updateExpense({
+                ...expense,
+                transactionDate,
+                type,
+                amount,
+                currency,
+                recipient,
+            });
+            setUpdated(updated ? updated + 1 : 1);
+        } catch (err) {
+            setError(true);
+            logError(err.message);
+        }
     };
 
     return (
@@ -95,6 +112,11 @@ export default function ExpenseForm({ expense }: ExpenseFormArgs) {
                 <button onClick={deleteItem}>Delete</button>
                 <button onClick={updateItem}>Update</button>
                 {updated && <div>Updated</div>}
+                {error && (
+                    <ErrorMessage>
+                        -- Failed to execute the operation ---
+                    </ErrorMessage>
+                )}
             </Buttons>
         </>
     );

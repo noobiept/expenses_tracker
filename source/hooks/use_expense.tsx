@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Expense } from "../types";
 import { getExpense } from "../requests";
+import { logError } from "../log";
 
 export default function useExpense(id?: string) {
     const [loading, setLoading] = useState(true);
@@ -14,8 +15,9 @@ export default function useExpense(id?: string) {
 
             try {
                 setExpense(await getExpense(id));
-            } catch {
+            } catch (err) {
                 setError(true);
+                logError(err.message);
             } finally {
                 setLoading(false);
             }
