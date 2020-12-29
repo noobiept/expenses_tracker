@@ -44,8 +44,9 @@
         "endOfLine": "lf"
     },
     "scripts": {
+        "start": "npm-run-all --parallel fe be",
         "fe": "webpack serve --mode development --config webpack.config.js",
-        "server": "json-server --watch db.json",
+        "be": "json-server --watch db.json",
         "build": "webpack --mode production --config webpack.config.js",
         "format": "prettier --write \"**/*.{html,css,json,js,ts,tsx,md}\"",
         "test": "npm-run-all --parallel test:*",

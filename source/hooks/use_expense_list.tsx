@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import ParseLinkHeader from "parse-link-header";
 import { Expense, LinkHeaderInfo } from "../types";
-import config from "../config.json";
 import { logError } from "../log";
 import { getExpenseList } from "../requests";
 
