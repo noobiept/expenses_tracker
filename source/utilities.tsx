@@ -4,7 +4,15 @@ import { Expense } from "./types";
 
 dayjs.extend(localizedFormat);
 
-export function formatDate(value: string) {
+export function formatValue<T>(value?: T) {
+    return value ? value : "-";
+}
+
+export function formatDate(value?: string) {
+    if (!value) {
+        return "-";
+    }
+
     return dayjs(value).format("lll");
 }
 

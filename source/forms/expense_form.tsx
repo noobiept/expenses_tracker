@@ -4,7 +4,7 @@ import { logError } from "../log";
 import { deleteExpense, updateExpense } from "../requests";
 import { ErrorMessage } from "../styles";
 import { Expense } from "../types";
-import { formatDate } from "../utilities";
+import { formatDate, formatValue } from "../utilities";
 import { Buttons, Container } from "./expense_form.styles";
 
 export interface ExpenseFormArgs {
@@ -13,13 +13,17 @@ export interface ExpenseFormArgs {
 
 export default function ExpenseForm({ expense }: ExpenseFormArgs) {
     const history = useHistory();
-    const [transactionDate, setTransactionDate] = useState<string>(
+    const [transactionDate, setTransactionDate] = useState<string | undefined>(
         expense.transactionDate
     );
-    const [type, setType] = useState<string>(expense.type);
-    const [amount, setAmount] = useState<number>(expense.amount);
-    const [currency, setCurrency] = useState<string>(expense.currency);
-    const [recipient, setRecipient] = useState<string>(expense.recipient);
+    const [type, setType] = useState<string | undefined>(expense.type);
+    const [amount, setAmount] = useState<number | undefined>(expense.amount);
+    const [currency, setCurrency] = useState<string | undefined>(
+        expense.currency
+    );
+    const [recipient, setRecipient] = useState<string | undefined>(
+        expense.recipient
+    );
     const [updated, setUpdated] = useState<number | undefined>();
     const [error, setError] = useState(false);
 
@@ -66,7 +70,7 @@ export default function ExpenseForm({ expense }: ExpenseFormArgs) {
         <>
             <Container>
                 <label htmlFor="id">ID: </label>
-                <div id="id">{expense.id}</div>
+                <div id="id">{formatValue(expense.id)}</div>
                 <label htmlFor="type">Type:</label>
                 <input
                     type="text"

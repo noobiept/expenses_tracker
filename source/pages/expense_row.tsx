@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 import { Expense } from "../types";
-import { formatDate } from "../utilities";
+import { formatDate, formatValue } from "../utilities";
 import { TableData, TableRow } from "./expense_row.styles";
 
 export interface ExpenseRowArgs {
@@ -15,10 +15,10 @@ export default function ExpenseRow({ expense }: ExpenseRowArgs) {
 
     return (
         <TableRow onClick={rowClick}>
-            <TableData>{expense.type}</TableData>
-            <TableData>{expense.amount}</TableData>
-            <TableData>{expense.currency}</TableData>
-            <TableData>{expense.recipient}</TableData>
+            <TableData>{formatValue(expense.type)}</TableData>
+            <TableData>{formatValue(expense.amount)}</TableData>
+            <TableData>{formatValue(expense.currency)}</TableData>
+            <TableData>{formatValue(expense.recipient)}</TableData>
             <TableData>{formatDate(expense.transactionDate)}</TableData>
         </TableRow>
     );
