@@ -1,5 +1,33 @@
+import ParseLinkHeader from "parse-link-header";
 import config from "./config.json";
-import { Expense } from "./types";
+import { Expense, LinkHeaderInfo } from "./types";
+
+export async function getExpenseList(page: number, limit: number) {
+    const url = new URL(
+        `expenses?_page=${page}&_limit=${limit}`,
+        config.serverURL
+    );
+    const response = await fetch(url.href);
+    if (!response.ok) {
+        throw new Error(`Unsuccessful response: ${response.status}`);
+    }
+
+    const linkHeader = response.headers.get("link");
+    if (!linkHeader) {
+        throw new Error("Missing 'link' header.");
+    }
+
+    const parsedPagesInfo = ParseLinkHeader(linkHeader) as
+        | LinkHeaderInfo
+        | undefined;
+    if (!parsedPagesInfo) {
+        throw new Error("Failed to parse the 'link' info.");
+    }
+
+    const result = (await response.json()) as Expense[];
+
+    return { result, parsedPagesInfo };
+}
 
 export async function getExpense(id?: string) {
     if (!id) {
