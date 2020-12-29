@@ -37,6 +37,10 @@ export default function ExpenseForm({ expense }: ExpenseFormArgs) {
     }, [updated]);
 
     const deleteItem = async () => {
+        if (!window.confirm("Delete expense?")) {
+            return;
+        }
+
         setError(false);
 
         try {
