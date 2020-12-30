@@ -1,3 +1,5 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 
@@ -24,4 +26,9 @@ module.exports = {
         port: 8000,
         historyApiFallback: true,
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: "./index.html",
+        }),
+    ],
 };
