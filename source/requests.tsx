@@ -76,3 +76,19 @@ export async function updateExpense(expense: Expense) {
 
     return response.ok;
 }
+
+export async function createExpense(expense: Expense) {
+    const url = new URL(`expenses`, config.serverURL);
+    const response = await fetch(url.href, {
+        method: "POST",
+        headers: new Headers({
+            "Content-Type": "application/json",
+        }),
+        body: JSON.stringify(expense),
+    });
+    if (!response.ok) {
+        throw new Error(`Unsuccessful response: ${response.status}`);
+    }
+
+    return response.ok;
+}
