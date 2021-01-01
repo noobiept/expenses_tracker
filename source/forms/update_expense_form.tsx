@@ -5,13 +5,13 @@ import { deleteExpense, updateExpense } from "../requests";
 import { ErrorMessage } from "../styles";
 import { Expense } from "../types";
 import { formatDate, formatValue } from "../utilities";
-import { Buttons, Container } from "./expense_form.styles";
+import { Buttons, Container } from "./update_expense_form.styles";
 
-export interface ExpenseFormArgs {
+export interface UpdateExpenseFormArgs {
     expense: Expense;
 }
 
-export default function ExpenseForm({ expense }: ExpenseFormArgs) {
+export default function UpdateExpenseForm({ expense }: UpdateExpenseFormArgs) {
     const history = useHistory();
     const [transactionDate, setTransactionDate] = useState<string | undefined>(
         expense.transactionDate
@@ -122,7 +122,7 @@ export default function ExpenseForm({ expense }: ExpenseFormArgs) {
                 {updated && <div>Updated</div>}
                 {error && (
                     <ErrorMessage>
-                        -- Failed to execute the operation ---
+                        -- Failed to execute the operation --
                     </ErrorMessage>
                 )}
             </Buttons>

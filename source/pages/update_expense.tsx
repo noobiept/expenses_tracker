@@ -1,17 +1,17 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import ExpenseForm from "../forms/expense_form";
+import UpdateExpenseForm from "../forms/update_expense_form";
 import useExpense from "../hooks/use_expense";
 import { ErrorMessage } from "../styles";
 import { isEmpty } from "../utilities";
-import { Buttons } from "./individual_expense.styles";
+import { Buttons } from "./update_expense.styles";
 
-interface IndividualExpenseParams {
+interface UpdateExpenseParams {
     id?: string;
 }
 
-export default function IndividualExpense() {
-    const { id } = useParams<IndividualExpenseParams>();
+export default function UpdateExpense() {
+    const { id } = useParams<UpdateExpenseParams>();
     const { loading, error, expense } = useExpense(id);
     const history = useHistory();
 
@@ -27,7 +27,7 @@ export default function IndividualExpense() {
     } else if (!expense || isEmpty(expense)) {
         content = <div>Not found.</div>;
     } else {
-        content = <ExpenseForm expense={expense} />;
+        content = <UpdateExpenseForm expense={expense} />;
     }
 
     return (
