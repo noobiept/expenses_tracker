@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Device } from "../styles";
 
 export const Table = styled.table`
@@ -32,8 +32,16 @@ export const TBody = styled.tbody`
 
 export const TableRow = styled.tr``;
 
-export const TableHeader = styled.th`
+export const TableHeader = styled.th<{ selected?: boolean }>`
     padding: 0 5px;
+    cursor: pointer;
+
+    ${({ selected }) =>
+        selected &&
+        css`
+            color: white;
+            background-color: rgb(64, 91, 199);
+        `}
 `;
 
 export const Controls = styled.div`

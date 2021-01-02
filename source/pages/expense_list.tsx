@@ -12,11 +12,19 @@ import {
     THead,
 } from "./expense_list.styles";
 import { ErrorMessage } from "../styles";
+import { SortBy, SortOrder } from "../types";
 
 export default function ExpenseList() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(50);
-    const { loading, error, expenses, pagesInfo } = useExpenseList(page, limit);
+    const [sortBy, setSortBy] = useState<SortBy>("type");
+    const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+    const { loading, error, expenses, pagesInfo } = useExpenseList(
+        page,
+        limit,
+        sortBy,
+        sortOrder
+    );
 
     const goPreviousPage = () => {
         if (pagesInfo?.prev) {
@@ -45,6 +53,16 @@ export default function ExpenseList() {
     const changeLimit = (val: number) => {
         setPage(1);
         setLimit(val);
+    };
+    const sortTable = (sortKey: SortBy) => {
+        return () => {
+            if (sortBy === sortKey) {
+                setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+            } else {
+                setSortBy(sortKey);
+                setSortOrder("asc");
+            }
+        };
     };
 
     return (
@@ -80,11 +98,36 @@ export default function ExpenseList() {
                 <Table>
                     <THead>
                         <TableRow>
-                            <TableHeader>Type</TableHeader>
-                            <TableHeader>Amount</TableHeader>
-                            <TableHeader>Currency</TableHeader>
-                            <TableHeader>Recipient</TableHeader>
-                            <TableHeader>Date</TableHeader>
+                            <TableHeader
+                                selected={sortBy === "type"}
+                                onClick={sortTable("type")}
+                            >
+                                Type
+                            </TableHeader>
+                            <TableHeader
+                                selected={sortBy === "amount"}
+                                onClick={sortTable("amount")}
+                            >
+                                Amount
+                            </TableHeader>
+                            <TableHeader
+                                selected={sortBy === "currency"}
+                                onClick={sortTable("currency")}
+                            >
+                                Currency
+                            </TableHeader>
+                            <TableHeader
+                                selected={sortBy === "recipient"}
+                                onClick={sortTable("recipient")}
+                            >
+                                Recipient
+                            </TableHeader>
+                            <TableHeader
+                                selected={sortBy === "transactionDate"}
+                                onClick={sortTable("transactionDate")}
+                            >
+                                Date
+                            </TableHeader>
                         </TableRow>
                     </THead>
                     <TBody>

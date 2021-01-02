@@ -4,7 +4,7 @@ const faker = require("faker");
 const { v4: uuidv4 } = require("uuid");
 
 function randomBool() {
-    return Math.random() < 0.8;
+    return Math.random() < 0.9;
 }
 
 function includeValue(val) {

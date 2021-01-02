@@ -20,3 +20,13 @@ export interface LinkHeaderInfo {
     prev?: PageInfo;
     next?: PageInfo;
 }
+
+export type SortBy =
+    | "id"
+    | "transactionDate"
+    | "amount"
+    | "recipient"
+    | "currency"
+    | "type";
+
+export type SortOrder = "asc" | "desc";

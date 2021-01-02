@@ -1,10 +1,15 @@
 import ParseLinkHeader from "parse-link-header";
 import config from "./config.json";
-import { Expense, LinkHeaderInfo } from "./types";
+import { Expense, LinkHeaderInfo, SortBy, SortOrder } from "./types";
 
-export async function getExpenseList(page: number, limit: number) {
+export async function getExpenseList(
+    page: number,
+    limit: number,
+    sort: SortBy,
+    order: SortOrder
+) {
     const url = new URL(
-        `expenses?_page=${page}&_limit=${limit}`,
+        `expenses?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
         config.serverURL
     );
     const response = await fetch(url.href);

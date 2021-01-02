@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
-import { Expense, LinkHeaderInfo } from "../types";
+import { Expense, LinkHeaderInfo, SortBy, SortOrder } from "../types";
 import { logError } from "../log";
 import { getExpenseList } from "../requests";
 
-export default function useExpenseList(page: number, limit: number) {
+export default function useExpenseList(
+    page: number,
+    limit: number,
+    sort: SortBy,
+    order: SortOrder
+) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [expenses, setExpenses] = useState<Expense[] | undefined>();
@@ -17,7 +22,9 @@ export default function useExpenseList(page: number, limit: number) {
             try {
                 const { result, parsedPagesInfo } = await getExpenseList(
                     page,
-                    limit
+                    limit,
+                    sort,
+                    order
                 );
                 setExpenses(result);
                 setPagesInfo(parsedPagesInfo);
@@ -30,7 +37,7 @@ export default function useExpenseList(page: number, limit: number) {
         }
 
         fetchExpenses();
-    }, [page, limit]);
+    }, [page, limit, sort, order]);
 
     return { loading, error, expenses, pagesInfo };
 }
