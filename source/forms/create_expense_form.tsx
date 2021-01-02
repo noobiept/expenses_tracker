@@ -20,7 +20,7 @@ export default function CreateExpenseForm() {
         try {
             await createExpense({
                 id: uuidv4(),
-                transactionDate: new Date().toString(),
+                transactionDate: new Date().getTime(),
                 amount,
                 recipient,
                 currency,

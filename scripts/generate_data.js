@@ -11,13 +11,20 @@ function includeValue(val) {
     return randomBool() ? val : undefined;
 }
 
+function getPastDate() {
+    const str = faker.date.past();
+    const date = new Date(str);
+
+    return date.getTime();
+}
+
 function generate(length) {
     const expenses = [];
 
     for (let a = 0; a < length; a++) {
         expenses.push({
             id: uuidv4(),
-            transactionDate: includeValue(faker.date.past()),
+            transactionDate: includeValue(getPastDate()),
             amount: includeValue(faker.finance.amount()),
             recipient: includeValue(
                 `${faker.name.firstName()} ${faker.name.lastName()}`
@@ -35,7 +42,7 @@ function generate(length) {
 function generateData(path, length) {
     const data = generate(length);
 
-    fs.writeFileSync(path, JSON.stringify(data));
+    fs.writeFileSync(path, JSON.stringify(data, null, 4));
 }
 
 generateData("./db.json", 1000);

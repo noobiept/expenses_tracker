@@ -4,7 +4,12 @@ import { logError } from "../log";
 import { deleteExpense, updateExpense } from "../requests";
 import { ErrorMessage } from "../styles";
 import { Expense } from "../types";
-import { formatDate, formatValue } from "../utilities";
+import {
+    formatDate,
+    formatValue,
+    validateDate,
+    validateNumber,
+} from "../utilities";
 import { Buttons, Container } from "./update_expense_form.styles";
 
 export interface UpdateExpenseFormArgs {
@@ -14,10 +19,12 @@ export interface UpdateExpenseFormArgs {
 export default function UpdateExpenseForm({ expense }: UpdateExpenseFormArgs) {
     const history = useHistory();
     const [transactionDate, setTransactionDate] = useState<string | undefined>(
-        expense.transactionDate
+        formatDate(expense.transactionDate)
     );
     const [type, setType] = useState<string | undefined>(expense.type);
-    const [amount, setAmount] = useState<number | undefined>(expense.amount);
+    const [amount, setAmount] = useState<string | undefined>(
+        expense.amount?.toString()
+    );
     const [currency, setCurrency] = useState<string | undefined>(
         expense.currency
     );
@@ -57,9 +64,9 @@ export default function UpdateExpenseForm({ expense }: UpdateExpenseFormArgs) {
         try {
             await updateExpense({
                 ...expense,
-                transactionDate,
+                transactionDate: validateDate(transactionDate),
                 type,
-                amount,
+                amount: validateNumber(amount),
                 currency,
                 recipient,
             });
@@ -86,7 +93,7 @@ export default function UpdateExpenseForm({ expense }: UpdateExpenseFormArgs) {
                 <input
                     type="string"
                     id="date"
-                    value={formatDate(transactionDate)}
+                    value={transactionDate}
                     onChange={(e) => setTransactionDate(e.target.value)}
                 />
                 <label htmlFor="amount">Amount:</label>
@@ -94,12 +101,7 @@ export default function UpdateExpenseForm({ expense }: UpdateExpenseFormArgs) {
                     type="number"
                     id="amount"
                     value={amount}
-                    onChange={(e) => {
-                        const value = parseFloat(e.target.value);
-                        if (!isNaN(value)) {
-                            setAmount(value);
-                        }
-                    }}
+                    onChange={(e) => setAmount(e.target.value)}
                 />
                 <label htmlFor="currency">Currency:</label>
                 <input
