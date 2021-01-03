@@ -2,6 +2,7 @@
 const fs = require("fs");
 const faker = require("faker");
 const { v4: uuidv4 } = require("uuid");
+const dayjs = require("dayjs");
 
 function randomBool() {
     return Math.random() < 0.9;
@@ -13,9 +14,9 @@ function includeValue(val) {
 
 function getPastDate() {
     const str = faker.date.past();
-    const date = new Date(str);
+    const date = dayjs(str);
 
-    return date.getTime();
+    return date.unix();
 }
 
 function generate(length) {
@@ -42,7 +43,7 @@ function generate(length) {
 function generateData(path, length) {
     const data = generate(length);
 
-    fs.writeFileSync(path, JSON.stringify(data, null, 4));
+    fs.writeFileSync(path, JSON.stringify(data, null, 2));
 }
 
 generateData("./db.json", 1000);

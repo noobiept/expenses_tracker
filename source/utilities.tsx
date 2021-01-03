@@ -13,11 +13,7 @@ export function formatDate(value?: number) {
         return "-";
     }
 
-    return dayjs(value).format("lll");
-}
-
-export function formatDateLong(value: string) {
-    return dayjs(value).format("LLLL");
+    return dayjs.unix(value).format("lll");
 }
 
 export function isEmpty(dict: Expense) {
@@ -29,12 +25,10 @@ export function validateDate(str?: string) {
         return;
     }
 
-    const time = new Date(str).getTime();
-    if (isNaN(time)) {
-        return;
+    const time = dayjs(str);
+    if (time.isValid()) {
+        return time.unix();
     }
-
-    return time;
 }
 
 export function validateNumber(str?: string) {
