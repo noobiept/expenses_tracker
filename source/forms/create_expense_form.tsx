@@ -8,10 +8,10 @@ import { useHistory } from "react-router-dom";
 
 export default function CreateExpenseForm() {
     const history = useHistory();
-    const [type, setType] = useState<string | undefined>();
-    const [amount, setAmount] = useState<number | undefined>();
-    const [currency, setCurrency] = useState<string | undefined>();
-    const [recipient, setRecipient] = useState<string | undefined>();
+    const [type, setType] = useState<string>("");
+    const [amount, setAmount] = useState<number>(0);
+    const [currency, setCurrency] = useState<string>("");
+    const [recipient, setRecipient] = useState<string>("");
     const [error, setError] = useState(false);
 
     const createItem = async () => {

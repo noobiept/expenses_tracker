@@ -21,16 +21,12 @@ export default function UpdateExpenseForm({ expense }: UpdateExpenseFormArgs) {
     const [transactionDate, setTransactionDate] = useState<string | undefined>(
         formatDate(expense.transactionDate)
     );
-    const [type, setType] = useState<string | undefined>(expense.type);
-    const [amount, setAmount] = useState<string | undefined>(
-        expense.amount?.toString()
+    const [type, setType] = useState<string>(expense.type ?? "");
+    const [amount, setAmount] = useState<string>(
+        expense.amount?.toString() ?? ""
     );
-    const [currency, setCurrency] = useState<string | undefined>(
-        expense.currency
-    );
-    const [recipient, setRecipient] = useState<string | undefined>(
-        expense.recipient
-    );
+    const [currency, setCurrency] = useState<string>(expense.currency ?? "");
+    const [recipient, setRecipient] = useState<string>(expense.recipient ?? "");
     const [updated, setUpdated] = useState<number | undefined>();
     const [error, setError] = useState(false);
 
