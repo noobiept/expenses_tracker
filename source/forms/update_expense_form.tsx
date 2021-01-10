@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { logError } from "../log";
 import { deleteExpense, updateExpense } from "../requests";
 import { ErrorMessage } from "../styles";
-import { Expense } from "../types";
+import { Expense, HistoryState } from "../types";
 import {
     formatDate,
     formatValue,
@@ -17,7 +17,7 @@ export interface UpdateExpenseFormArgs {
 }
 
 export default function UpdateExpenseForm({ expense }: UpdateExpenseFormArgs) {
-    const history = useHistory();
+    const history = useHistory<HistoryState>();
     const [transactionDate, setTransactionDate] = useState<string | undefined>(
         formatDate(expense.transactionDate)
     );
@@ -48,7 +48,9 @@ export default function UpdateExpenseForm({ expense }: UpdateExpenseFormArgs) {
 
         try {
             await deleteExpense(expense.id);
-            history.push("/");
+            history.push("/", {
+                message: `Deleted: ${expense.id}`,
+            });
         } catch (err) {
             setError(true);
             logError(err.message);

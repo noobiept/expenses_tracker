@@ -30,3 +30,7 @@ export type SortBy =
     | "type";
 
 export type SortOrder = "asc" | "desc";
+
+export type HistoryState = {
+    message?: string;
+};

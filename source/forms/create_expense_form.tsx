@@ -5,9 +5,10 @@ import { ErrorMessage } from "../styles";
 import { Buttons, Container } from "./update_expense_form.styles";
 import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router-dom";
+import { HistoryState } from "../types";
 
 export default function CreateExpenseForm() {
-    const history = useHistory();
+    const history = useHistory<HistoryState>();
     const [type, setType] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
     const [currency, setCurrency] = useState<string>("");
@@ -26,7 +27,9 @@ export default function CreateExpenseForm() {
                 currency,
                 type,
             });
-            history.push("/");
+            history.push("/", {
+                message: "Expense Created",
+            });
         } catch (err) {
             setError(true);
             logError(err.message);
