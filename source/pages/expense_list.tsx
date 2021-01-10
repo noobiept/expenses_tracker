@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
 
 import Select from "../elements/select";
 import ExpenseRow from "./expense_row";
@@ -13,11 +12,10 @@ import {
     THead,
 } from "./expense_list.styles";
 import { ErrorMessage } from "../styles";
-import { HistoryState, SortBy, SortOrder } from "../types";
+import { SortBy, SortOrder } from "../types";
 import Notification from "../elements/notification_popup";
 
 export default function ExpenseList() {
-    const location = useLocation<HistoryState>();
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(50);
     const [sortBy, setSortBy] = useState<SortBy>("type");
