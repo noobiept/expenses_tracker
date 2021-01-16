@@ -16,3 +16,8 @@
 -   `npm run build` (build the application)
 -   `npm run test` (run some tests)
 -   `npm run generateData` (generate some backend data)
+
+# Docker
+
+-   `npm run docker:build` (build image)
+-   `npm run docker:run` (run container `localhost at port 80 (default)`)
