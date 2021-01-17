@@ -14,10 +14,12 @@ import {
 import { ErrorMessage } from "../styles";
 import { SortBy, SortOrder } from "../types";
 import Notification from "../elements/notification_popup";
+import { getLimitParam } from "../utilities";
 
 export default function ExpenseList() {
+    const initialLimit = React.useMemo(() => getLimitParam() ?? 50, []);
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(50);
+    const [limit, setLimit] = useState(initialLimit);
     const [sortBy, setSortBy] = useState<SortBy>("type");
     const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
     const { loading, error, expenses, pagesInfo } = useExpenseList(
@@ -54,6 +56,10 @@ export default function ExpenseList() {
     const changeLimit = (val: number) => {
         setPage(1);
         setLimit(val);
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("limit", val.toString());
+        history.replaceState(null, document.title, url.toString());
     };
     const sortTable = (sortKey: SortBy) => {
         return () => {

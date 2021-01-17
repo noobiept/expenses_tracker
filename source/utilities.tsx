@@ -43,3 +43,16 @@ export function validateNumber(str?: string) {
 
     return value;
 }
+
+export function getLimitParam() {
+    const params = new URLSearchParams(window.location.search);
+    const limit = params.get("limit");
+
+    if (limit) {
+        const parsed = parseInt(limit, 10);
+
+        if (!isNaN(parsed)) {
+            return parsed;
+        }
+    }
+}
